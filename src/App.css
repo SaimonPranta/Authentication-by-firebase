@@ -1,10 +1,61 @@
 .App {
-  text-align: center;
+  background-color: hsl(114, 8%, 76%);
+  width: 100vw;
+  height: 100vh;
+  display: block;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.form-controler{
+  width: 400px;
+  margin: auto;
+  border-radius: 8px;
+  background-color: rgb(171, 192, 185);
+  padding:25px;
+}
+.form-controler p{
+  text-align: center;;
+}
+.form-controler strong{
+  cursor: pointer;
+  color: blueviolet;
+}
+.g-button{
+  background-color:white;
+  border: 1px solid rgb(50, 50, 39);
+  width:260px;
+  border-radius: 30px;
+  font-weight: 600;
+  margin:10px auto 5px auto;
+  display: block;
+}
+.g-button:nth-child(even){
+  margin-top: 20px;
+}
+.g-button img{
+  height: 30px;
+}
+.email{
+  margin:4px auto;
+  text-align: start;
+}
+
+.submit{
+  padding: 1px 5px;
+  width:90px;
+  background-color:rgb(186, 192, 177);
+  border-radius:3px;
+  border:1px solid white;
+  font-weight: 600;
+}
+.log-out img{
+  height: 20px;
+  
+}
+.log-out{
+  border: 1px solid blanchedalmond;
+  background-color: rgb(126, 132, 118);
+  border-radius: 5px;
+  font-weight: 500;
 }
 
 @media (prefers-reduced-motion: no-preference) {
