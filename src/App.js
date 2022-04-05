@@ -25,14 +25,6 @@ function App() {
     photo: '',
     conPassCondition: true,
   });
-  const [oltUser, setOltUser] = useState({
-    name: '',
-    email: '',
-    photo: '',
-    dateOfBirth: '',
-    gender: '',
-    singUp: false,
-  });
 
   const GoogleIcone = <img src="https://img.icons8.com/color/48/000000/google-logo.png" />
   const facebookIcone = <img src="https://img.icons8.com/color/48/000000/facebook-new.png" />
@@ -44,42 +36,36 @@ function App() {
   const db = getDatabase(app);
   const userInfo = auth.currentUser;
 
-
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       const newUser = {
         name: '',
         email: '',
-        photo: ''
+        photo: '',
+        dateOfBirth: ''
       }
       if (user) {
         newUser.name = user.displayName
         newUser.email = user.email
         newUser.photo = user.photoURL
-        console.log(user)
-        // setUser(newUser)
-
-
+        setUser(newUser)
 
         const dbRef = ref(getDatabase());
-        get(child(dbRef, `users/${user.uid}`)).then((snapshot) => {
-          if (snapshot.exists()) {
-            const existUser = snapshot.val()
-            oltUser.name = existUser.username
-            oltUser.gender = existUser.gender
-            oltUser.dateOfBirth = existUser.dateOfBirth
-            oltUser.email = existUser.email
-            console.log('lskf')
-            setOltUser(newUser)
-            // window.location.reload()
-
-          } else {
-            console.log("No data available");
-          }
-        }).catch((error) => {
-          console.error(error);
-        });
+        get(child(dbRef, `users/${user.uid}`))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const existUser = snapshot.val()
+              newUser.name = existUser.username
+              newUser.gender = existUser.gender
+              newUser.dateOfBirth = existUser.dateOfBirth
+              newUser.email = existUser.email
+              setUser(newUser)
+            } else {
+              console.log("No data available");
+            }
+          }).catch((error) => {
+            console.error(error);
+          });
       }
       setUser(newUser)
 
@@ -95,11 +81,6 @@ function App() {
       email: email,
     });
   }
-
-  const serverHandeler = () => {
-    writeUserData(12, "pranta", 'male', "38-3e8-38", 'saimon@comls.slik')
-  }
-
 
   const handleSignInWithGoogle = () => {
     signInWithPopup(auth, GoogleProvider)
@@ -151,7 +132,7 @@ function App() {
     signOut(auth)
       .then()
       .catch()
-      console.log('jksdjfk')
+    console.log('jksdjfk')
     setUser(newUser)
   }
   const ConfirmInputHnadeler = (e) => {
@@ -217,25 +198,6 @@ function App() {
     e.preventDefault()
   }
 
-  // useEffect(() => {
-  //   if (inputUser.email && inputUser.password === inputUser.confirmPassword && inputUser.name && inputUser.gender && inputUser.dateOfBirth) {
-  //     const newUser = {
-  //       name: '',
-  //       email: '',
-  //       photo: ''
-  //     }
-  //     updateProfile(auth.currentUser, {
-  //       displayName: inputUser.name,
-  //       photoURL: "",
-  //       dateOfBirth: inputUser.dateOfBirth
-  //     }).then((res) => {
-  //       console.log(res)
-  //       console.log('user update sucessfully')
-  //     }).catch((error) => {
-  //       console.log('error to update user')
-  //     });
-  //   }
-  // }, [])
   const logInHandeler = (e) => {
     const newUser = { ...user }
 
@@ -243,15 +205,12 @@ function App() {
     if (inputUser.email && inputUser.password) {
       signInWithEmailAndPassword(auth, inputUser.email, inputUser.password)
         .then((userCredential) => {
-          // Signed in 
           const user = userCredential.user;
           console.log(user)
           newUser.name = user.displayName
           newUser.email = user.email
           newUser.photo = user.photoURL
-          console.log('dkjkf')
           setUser(newUser)
-          // ...
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -355,7 +314,6 @@ function App() {
       {
         user.email && <button onClick={handleGoogleSingOut} className='log-out'> {logOutIcone} Log Out</button>
       }
-      <button onClick={serverHandeler}>Click data</button>
 
 
     </div>
